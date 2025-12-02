@@ -129,7 +129,7 @@ def generate_launch_description():
             RegisterEventHandler(
                 event_handler=OnProcessExit(
                     target_action=joint_state_broadcaster_spawner,
-                    on_exit=[admittance_controller_spawner, panda_hand_controller_spawner,ft_sensor_broadcaster_spawner],
+                    on_exit=[admittance_controller_spawner, panda_hand_controller_spawner, ft_sensor_broadcaster_spawner],
                 )
             ),
             RegisterEventHandler(

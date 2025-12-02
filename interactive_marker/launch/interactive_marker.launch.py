@@ -112,8 +112,13 @@ def generate_launch_description():
         executable="spawner",
         arguments=["panda_hand_controller", "-c", "/controller_manager"],
     )
-    # Without spawning admittance controller, panda arm controller is not working.
-    # Admittance controller is disabled in default, so it shouldn't apply until enabled.
+    
+    ft_sensor_broadcaster_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["force_torque_broadcaster", "-c", "/controller_manager"],
+    )
+    
     admittance_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
@@ -131,7 +136,7 @@ def generate_launch_description():
             RegisterEventHandler(
                 event_handler=OnProcessExit(
                     target_action=joint_state_broadcaster_spawner,
-                    on_exit=[admittance_controller_spawner,panda_hand_controller_spawner],
+                    on_exit=[admittance_controller_spawner, panda_hand_controller_spawner, ft_sensor_broadcaster_spawner],
                 )
             ),
             RegisterEventHandler(
