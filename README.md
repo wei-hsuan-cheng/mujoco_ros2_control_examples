@@ -7,7 +7,7 @@
 Before clone the repo, please make sure you have [`mujoco_ros2_control`](https://github.com/wei-hsuan-cheng/mujoco_ros2_control)  installed.
 ```bash
 cd ~/ros2_ws/src
-git clone https://github.com/wei-hsuan-cheng/mujoco_ros2_control_examples.git -b bugfix/ft_sensor
+git clone https://github.com/wei-hsuan-cheng/mujoco_ros2_control_examples.git -b humble
 cd ~/ros2_ws
 colcon build --symlink-install && . install/setup.bash
 ```
