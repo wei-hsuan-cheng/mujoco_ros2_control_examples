@@ -1,12 +1,20 @@
 import os
 from launch import LaunchDescription
-from launch_ros.actions import Node
-from launch.actions import RegisterEventHandler
+from launch.actions import DeclareLaunchArgument, RegisterEventHandler
 from launch.event_handlers import OnProcessStart, OnProcessExit
+from launch.substitutions import (
+    LaunchConfiguration,
+    PathJoinSubstitution,
+    PythonExpression,
+)
+from launch_ros.actions import Node
+from launch_ros.substitutions import FindPackageShare
 from ament_index_python.packages import get_package_share_directory
 from moveit_configs_utils import MoveItConfigsBuilder
 
 def generate_launch_description():
+
+    task = LaunchConfiguration("task")
 
     moveit_config = (
         MoveItConfigsBuilder("moveit_resources_panda")
@@ -79,6 +87,16 @@ def generate_launch_description():
         "ros2_controllers.yaml",
     )
 
+    mujoco_model_filename = PythonExpression(
+        ["'scene_' + '", task, "' + '.xml'"]
+    )
+
+    mujoco_model_path = PathJoinSubstitution([
+        FindPackageShare("panda_mujoco"),
+        "franka_emika_panda",
+        mujoco_model_filename,
+    ])
+
     node_mujoco_ros2_control = Node(
         package='mujoco_ros2_control',
         executable='mujoco_ros2_control',
@@ -86,8 +104,7 @@ def generate_launch_description():
         parameters=[
             moveit_config.robot_description,
             ros2_controllers_path,
-            {'mujoco_model_path':os.path.join(get_package_share_directory('panda_mujoco'), 'franka_emika_panda', 'scene_peg_in_hole.xml')},
-            # {'mujoco_model_path':os.path.join(get_package_share_directory('panda_mujoco'), 'franka_emika_panda', 'scene_push_load.xml')},
+            {'mujoco_model_path': mujoco_model_path},
             {"use_sim_time": True}
         ]
     )
@@ -128,6 +145,11 @@ def generate_launch_description():
 
     return LaunchDescription(
         [
+            DeclareLaunchArgument(
+                "task",
+                default_value="push_load",
+                description="Task name (e.g. 'peg_in_hole' or 'push_load')",
+            ),
             RegisterEventHandler(
                 event_handler=OnProcessStart(
                     target_action=node_mujoco_ros2_control,
