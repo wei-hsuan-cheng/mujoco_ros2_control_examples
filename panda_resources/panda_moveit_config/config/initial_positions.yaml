@@ -1,9 +1,21 @@
 # Default initial positions for the panda arm's ros2_control fake system
 initial_positions:
-  panda_joint1: 0.0
-  panda_joint2: -0.785
-  panda_joint3: 0.0
-  panda_joint4: -2.356
-  panda_joint5: 0.0
-  panda_joint6: 1.571
-  panda_joint7: 0.785
+  # Table-top initial configuration
+  # panda_joint1: 0.0
+  # panda_joint2: -0.785
+  # panda_joint3: 0.0
+  # panda_joint4: -2.356
+  # panda_joint5: 0.0
+  # panda_joint6: 1.571
+  # panda_joint7: 0.785
+
+  # Door opening initial configuration
+  # Values below are in [rad] and correspond to:
+  # [148°, 53°, -131°, -141°, -163°, 170°, -115°]
+  panda_joint1: 2.5831
+  panda_joint2: 0.9250
+  panda_joint3: -2.2864
+  panda_joint4: -2.4609
+  panda_joint5: -2.8449
+  panda_joint6: 2.9671
+  panda_joint7: -2.0071
