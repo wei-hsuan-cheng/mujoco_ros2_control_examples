@@ -29,7 +29,7 @@
                 
                 <!-- Door hinge joint  -->
                 <!-- Located at the side of the door panel -->
-                <joint name="door_hinge" pos="0.3 0 0" axis="0 0 1" range="0 1.57" damping="0.1" frictionloss="0.2" />
+                <joint name="door_hinge" pos="0.3 0 0" axis="0 0 1" range="-1.57 1.57" damping="0.1" frictionloss="0.2" />
                 
                 <!-- Door latch  -->
                 <!-- Shifted from center: half_door_width - 2 * door_thickness -->
