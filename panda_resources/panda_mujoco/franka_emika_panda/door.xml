@@ -4,7 +4,7 @@
         <!-- Parameter definitions: -->
         <!-- distance_base_to_door = 0.6 [m] -->
         <!-- door_width: 0.6 [m] (half-width 0.3) -->
-        <!-- door_thickness: 0.02 [m] (half-thickness 0.02) -->
+        <!-- door_thickness: 0.04 [m] (half-thickness 0.02) -->
         <!-- door_height: 1.0 [m] (half-height 0.5) -->
         <!-- door_latch_offset: z=0.0 [m] -->
         <!-- door_latch_radius: 0.01 [m] -->
@@ -14,9 +14,10 @@
             
             <!-- Two vertical posts resting on ground -->
             <!-- Left post (shifted half_door_thickness) -->
-            <geom type="box" pos="-0.02 0 0" size="0.02 0.02 0.5" rgba="0 0 1 1"/>
+            <geom type="box" pos="-0.02 0 0" size="0.02 0.02 0.5" rgba="0.3 0.3 0.3 1"/>
             <!-- Right post (shifted door_width + half_door_thickness) -->
-            <geom type="box" pos="0.62 0 0" size="0.02 0.02 0.5" rgba="1 0 0 1"/>
+            <geom type="box" pos="0.62 0 0" size="0.02 0.02 0.5" rgba="0.3 0.3 0.3 1"/>
+            <geom type="box" pos="0.3 0 0.52" size="0.34 0.02 0.02" rgba="0.3 0.3 0.3 1"/>
             <site name="S_handle_target" pos="0.75 -0.5 -.18" size="0.02" group='3'/>
             
             <!-- Door panel -->
@@ -40,11 +41,11 @@
                     <joint name="door_latch" pos="0 0 0" axis="0 1 0" range="0 1.8" frictionloss="0.5" />
                     
                     <!-- Door latch shapes -->
-                    <geom type="cylinder" size="0.01 0.075" quat="0.7071068 0.7071068 0 0" />
+                    <geom type="cylinder" size="0.01 0.075" quat="0.7071068 0.7071068 0 0" rgba="0 0 0 1" />
                     <!-- Front handle -->
-                    <geom type="capsule" size="0.01 0.05" pos="0.05 -0.075 0" quat="0.7071068 0 0.7071068 0" />
+                    <geom type="capsule" size="0.01 0.05" pos="0.05 -0.075 0" quat="0.7071068 0 0.7071068 0" rgba="0 0 0 1" />
                     <!-- Back latch -->
-                    <geom type="capsule" size="0.02 0.055" pos="0.0 0.0425 0" quat="0.7071068 0 0.7071068 0" />
+                    <geom type="capsule" size="0.02 0.055" pos="0.0 0.0425 0" quat="0.7071068 0 0.7071068 0" rgba="0 0 0 1" />
                     <site name="S_handle" pos="0.15 -0.15 0" size="0.02" group='3'/>
 
                 </body>
