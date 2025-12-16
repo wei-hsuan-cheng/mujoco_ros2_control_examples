@@ -1,0 +1,5 @@
+<body name="peg" pos="0.0 0 0.115">
+  <geom type="mesh" mesh="bevel_peg" quat="0 1 0 0" rgba="0 1 0 1"/>
+  <inertial pos="0 0 0" mass="0.1" diaginertia="0.1 0.1 0.1"/>
+</body>
+
