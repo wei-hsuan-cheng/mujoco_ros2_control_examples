@@ -15,7 +15,7 @@ colcon build --symlink-install && . install/setup.bash
 ### Running demos (collision/contact physical interactions invovled)
 ```bash
 # Marker control
-ros2 launch interactive_marker interactive_marker.launch.py task:=push_load # or peg_in_hole
+ros2 launch interactive_marker interactive_marker.launch.py task:=open_door # open_door; push_load; peg_in_hole
 # Ped-in-hole manipulation task
 ros2 launch peg_in_hole peg_in_hole.launch.py
 ```
