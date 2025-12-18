@@ -14,23 +14,33 @@
             
             <!-- Two vertical posts resting on ground -->
             <!-- Left post (shifted half_door_thickness) -->
-            <geom type="box" pos="-0.02 0 0" size="0.02 0.02 0.5" rgba="0.3 0.3 0.3 1"/>
+            <!-- <geom type="box" pos="-0.02 0 0" size="0.02 0.02 0.5" rgba="0.3 0.3 0.3 1"/> -->
             <!-- Right post (shifted door_width + half_door_thickness) -->
-            <geom type="box" pos="0.62 0 0" size="0.02 0.02 0.5" rgba="0.3 0.3 0.3 1"/>
-            <geom type="box" pos="0.3 0 0.52" size="0.34 0.02 0.02" rgba="0.3 0.3 0.3 1"/>
-            <site name="S_handle_target" pos="0.75 -0.5 -.18" size="0.02" group='3'/>
+            <!-- <geom type="box" pos="0.62 0 0" size="0.02 0.02 0.5" rgba="0.3 0.3 0.3 1"/> -->
+            <!-- Upper horizontal beam -->
+            <!-- <geom type="box" pos="0.3 0 0.52" size="0.34 0.02 0.02" rgba="0.3 0.3 0.3 1"/> -->
+            <!-- <site name="S_handle_target" pos="0.75 -0.5 -.18" size="0.02" group='3'/> -->
             
             <!-- Door panel -->
             <!-- Located at half_door_width  -->
             <body name="door_panel" pos="0.3 0 0">
-                <inertial pos="0.0296816 -0.00152345 0" quat="0.7071068 0 0 0.7071068" mass="0.243455" diaginertia="0.0913751 0.0521615 0.043714" />
+                <!-- Uniform 5 kg wooden door; CoM at geometric center (0,0,0) and
+                     inertia of a 0.6 x 0.04 x 1.0 m box (x,y,z). -->
+                <inertial pos="0 0 0"
+                          quat="1 0 0 0"
+                          mass="5.0"
+                          diaginertia="0.4173 0.5667 0.1507" />
                 
                 <!-- Box size: half_door_width x half_door_thickness x half_door_height -->
-                <geom type="box" size="0.3 0.02 0.5" friction="1 1 1" />
+                <!-- Slightly higher friction than default to avoid slipping on the posts. -->
+                <!-- Door should be slightly shifted up to avoid collision with ground -->
+                <geom type="box" size="0.3 0.02 0.495" friction="0.5 0.1 0.001" />
                 
                 <!-- Door hinge joint  -->
-                <!-- Located at the side of the door panel -->
-                <joint name="door_hinge" pos="0.3 0 0" axis="0 0 1" range="-1.57 1.57" damping="0.1" frictionloss="0.2" />
+                <!-- Located at the side of the door panel; add moderate damping / friction, no spring. -->
+                <joint name="door_hinge" pos="0.3 0 0" axis="0 0 1"
+                       damping="0.2"
+                       frictionloss="0.05" />
                 
                 <!-- Door latch  -->
                 <!-- Shifted from center: half_door_width - 2 * door_thickness -->
@@ -38,15 +48,15 @@
                     <inertial pos="-0.027762 0.0238544 0" quat="0.365653 0.605347 -0.36522 0.605365" mass="0.353743" diaginertia="0.0483771 0.0410001 0.0211013" />
                     
                     <!-- Door latch joint -->
-                    <joint name="door_latch" pos="0 0 0" axis="0 1 0" range="0 1.8" frictionloss="0.5" />
+                    <joint name="door_latch" pos="0 0 0" axis="0 1 0" range="0 1.8" frictionloss="0.0" />
                     
                     <!-- Door latch shapes -->
                     <geom type="cylinder" size="0.01 0.075" quat="0.7071068 0.7071068 0 0" rgba="0 0 0 1" />
                     <!-- Front handle -->
                     <geom type="capsule" size="0.01 0.05" pos="0.05 -0.075 0" quat="0.7071068 0 0.7071068 0" rgba="0 0 0 1" />
                     <!-- Back latch -->
-                    <geom type="capsule" size="0.02 0.055" pos="0.0 0.0425 0" quat="0.7071068 0 0.7071068 0" rgba="0 0 0 1" />
-                    <site name="S_handle" pos="0.15 -0.15 0" size="0.02" group='3'/>
+                    <!-- <geom type="capsule" size="0.02 0.055" pos="0.0 0.0425 0" quat="0.7071068 0 0.7071068 0" rgba="0 0 0 1" />
+                    <site name="S_handle" pos="0.15 -0.15 0" size="0.02" group='3'/> -->
 
                 </body>
 
