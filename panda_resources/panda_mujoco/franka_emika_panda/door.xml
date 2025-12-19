@@ -10,7 +10,6 @@
         <!-- door_latch_radius: 0.01 [m] -->
 
         <body name="door_frame" pos="0.6 0.1 0.5" quat="0.7071068 0 0 -0.7071068" user="1001 0 2002 -0.4 -0.1 0.252 0 0.3 0.5">
-            <inertial pos="0.3 0 0" quat="0.5 0.5 0.5 0.5" mass="7.85398" diaginertia="0.923301 0.764585 0.168533" />
             
             <!-- Two vertical posts resting on ground -->
             <!-- Left post (shifted half_door_thickness) -->
@@ -24,7 +23,7 @@
             <!-- Door panel -->
             <!-- Located at half_door_width  -->
             <body name="door_panel" pos="0.3 0 0">
-                <!-- Uniform 5 kg wooden door; CoM at geometric center (0,0,0) and
+                <!-- Uniform density wooden door; CoM at geometric center (0,0,0) and
                      inertia of a 0.6 x 0.04 x 1.0 m box (x,y,z). -->
                 <inertial pos="0 0 0"
                           quat="1 0 0 0"
@@ -32,7 +31,6 @@
                           diaginertia="0.4173 0.5667 0.1507" />
                 
                 <!-- Box size: half_door_width x half_door_thickness x half_door_height -->
-                <!-- Slightly higher friction than default to avoid slipping on the posts. -->
                 <!-- Door should be slightly shifted up to avoid collision with ground -->
                 <geom type="box" size="0.3 0.02 0.495" friction="0.5 0.1 0.001" />
                 
@@ -44,15 +42,15 @@
                        stiffness="30.0"
                        springref="0.0" />
                 
-                <!-- Door latch  -->
+                <!-- Door handle and latch  -->
                 <!-- Shifted from center: half_door_width - 2 * door_thickness -->
                 <body name="door_latch" pos="-0.26 0 0.0">
                     <inertial pos="-0.027762 0.0238544 0" quat="0.365653 0.605347 -0.36522 0.605365" mass="0.353743" diaginertia="0.0483771 0.0410001 0.0211013" />
                     
                     <!-- Door latch joint -->
-                    <!-- Add a small torsion spring so the latch prefers the closed position (0 rad). -->
+                    <!-- Add a small torsion spring so the latch prefers the closed position (0 [rad]). -->
                     <joint name="door_latch" pos="0 0 0" axis="0 1 0"
-                           range="0 1.8"
+                           range="0 1.6"
                            damping="0.05"
                            frictionloss="0.02"
                            stiffness="2.0"
