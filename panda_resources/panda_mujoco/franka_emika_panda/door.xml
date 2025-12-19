@@ -19,7 +19,7 @@
             <geom type="box" pos="0.64 0 0" size="0.02 0.02 0.5" rgba="0.3 0.3 0.3 1"/>
             <!-- Upper horizontal beam -->
             <geom type="box" pos="0.3 0 0.52" size="0.36 0.02 0.02" rgba="0.3 0.3 0.3 1"/>
-            <!-- <site name="S_handle_target" pos="0.75 -0.5 -.18" size="0.02" group='3'/> -->
+            <site name="S_handle_target" pos="0.75 -0.5 -.18" size="0.02" group='3'/>
             
             <!-- Door panel -->
             <!-- Located at half_door_width  -->
@@ -28,7 +28,7 @@
                      inertia of a 0.6 x 0.04 x 1.0 m box (x,y,z). -->
                 <inertial pos="0 0 0"
                           quat="1 0 0 0"
-                          mass="5.0"
+                          mass="10.0"
                           diaginertia="0.4173 0.5667 0.1507" />
                 
                 <!-- Box size: half_door_width x half_door_thickness x half_door_height -->
@@ -37,11 +37,11 @@
                 <geom type="box" size="0.3 0.02 0.495" friction="0.5 0.1 0.001" />
                 
                 <!-- Door hinge joint  -->
-                <!-- Located at the side of the door panel; add stronger damping / friction, no spring. -->
+                <!-- Located at the side of the door panel -->
                 <joint name="door_hinge" pos="0.3 0 0" axis="0 0 1"
-                       damping="0.8"
-                       frictionloss="0.15"
-                       stiffness="2.0"
+                       damping="5.0"
+                       frictionloss="5.0"
+                       stiffness="30.0"
                        springref="0.0" />
                 
                 <!-- Door latch  -->
