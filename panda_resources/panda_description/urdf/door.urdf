@@ -1,0 +1,171 @@
+<?xml version="1.0"?>
+<robot name="door">
+
+  <!--
+    Simple door model with:
+      - fixed frame (posts)
+      - hinged door panel
+      - spring-loaded latch / handle
+
+    Geometry matches the MuJoCo door:
+      width  = 0.6 m
+      height = 1.0 m
+      thick  = 0.04 m
+  -->
+
+  <!-- Fixed door frame (two posts and an optional top beam). -->
+  <link name="door_frame">
+    <visual>
+      <geometry>
+        <!-- Left post -->
+        <box size="0.04 0.04 1.0"/>
+      </geometry>
+      <origin xyz="-0.02 0 0.5" rpy="0 0 0"/>
+      <material name="frame_grey">
+        <color rgba="0.3 0.3 0.3 1.0"/>
+      </material>
+    </visual>
+    <visual>
+      <geometry>
+        <!-- Right post -->
+        <box size="0.04 0.04 1.0"/>
+      </geometry>
+      <origin xyz="0.58 0 0.5" rpy="0 0 0"/>
+      <material name="frame_grey"/>
+    </visual>
+    <visual>
+      <geometry>
+        <!-- Top horizontal beam (optional) -->
+        <box size="0.68 0.04 0.04"/>
+      </geometry>
+      <origin xyz="0.28 0 1.0" rpy="0 0 0"/>
+      <material name="frame_grey"/>
+    </visual>
+
+    <collision>
+      <geometry>
+        <box size="0.04 0.04 1.0"/>
+      </geometry>
+      <origin xyz="-0.02 0 0.5" rpy="0 0 0"/>
+    </collision>
+    <collision>
+      <geometry>
+        <box size="0.04 0.04 1.0"/>
+      </geometry>
+      <origin xyz="0.58 0 0.5" rpy="0 0 0"/>
+    </collision>
+    <collision>
+      <geometry>
+        <box size="0.68 0.04 0.04"/>
+      </geometry>
+      <origin xyz="0.28 0 1.0" rpy="0 0 0"/>
+    </collision>
+  </link>
+
+  <!-- Door panel, with hinge at the frame origin.
+       Link frame is at the hinge; inertial/visual/collision are offset
+       so the door's geometric centre is at (0.3, 0, 0.5). -->
+  <link name="door_panel">
+    <inertial>
+      <!-- 5 kg uniform box: 0.6 x 0.04 x 1.0 m. CoM at geometric centre. -->
+      <origin xyz="0.3 0 0.5" rpy="0 0 0"/>
+      <mass value="5.0"/>
+      <!-- Diagonal inertia (Ixx, Iyy, Izz) in kg·m² -->
+      <inertia ixx="0.4173" ixy="0.0" ixz="0.0"
+               iyy="0.5667" iyz="0.0"
+               izz="0.1507"/>
+    </inertial>
+
+    <visual>
+      <origin xyz="0.3 0 0.5" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.6 0.04 1.0"/>
+      </geometry>
+      <material name="door_grey">
+        <color rgba="0.6 0.6 0.6 1.0"/>
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0.3 0 0.5" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.6 0.04 1.0"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Hinge connecting frame to panel. Axis is vertical (z). -->
+  <joint name="door_hinge" type="revolute">
+    <!-- Hinge at the left edge of the door at floor level. -->
+    <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+    <parent link="door_frame"/>
+    <child link="door_panel"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.57" upper="1.57" effort="50.0" velocity="2.0"/>
+    <!-- Damping/friction map to MuJoCo joint damping / frictionloss. -->
+    <dynamics damping="0.8" friction="0.15"/>
+  </joint>
+
+  <!-- Latch / handle link. Its frame is at the latch rotation axis. -->
+  <link name="door_latch">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.35"/>
+      <!-- Rough inertia for a small handle; not critical. -->
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+               iyy="0.001" iyz="0.0"
+               izz="0.001"/>
+    </inertial>
+
+    <!-- Main cylindrical spindle -->
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.01" length="0.15"/>
+      </geometry>
+      <material name="handle_black">
+        <color rgba="0.1 0.1 0.1 1.0"/>
+      </material>
+    </visual>
+
+    <!-- Simple straight handle bar -->
+    <visual>
+      <origin xyz="0.05 -0.075 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.1 0.02 0.02"/>
+      </geometry>
+      <material name="handle_black"/>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.01" length="0.15"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.05 -0.075 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.1 0.02 0.02"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Latch joint: rotates about local +Y, with light damping, friction,
+       and a torsion spring that returns it to 0 rad (closed). -->
+  <joint name="door_latch_joint" type="revolute">
+    <!-- Position latch roughly at handle height and offset from hinge. -->
+    <origin xyz="0.24 0 0.4" rpy="0 0 0"/>
+    <parent link="door_panel"/>
+    <child link="door_latch"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="0.0" upper="1.8" effort="10.0" velocity="3.0"/>
+    <!-- These map to MuJoCo latch damping / frictionloss / springref / stiffness. -->
+    <dynamics damping="0.05"
+              friction="0.02"
+              spring_reference="0.0"
+              spring_stiffness="2.0"/>
+  </joint>
+
+</robot>
+
