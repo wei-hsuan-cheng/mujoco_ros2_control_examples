@@ -109,25 +109,25 @@ admittance_controller:
       frame:
         id: sensor_fts  # Wrench measurements are in this frame
       filter_coefficient: 0.1
-      dead_zone:
-        # Small thresholds for [fx, fy, fz, tx, ty, tz]
-        # Values below these are treated as zero.
-        - 0.0   # x [N]
-        - 0.0   # y [N]
-        - 0.0   # z [N]
-        - 0.0   # rx [N·m]
-        - 0.0   # ry [N·m]
-        - 0.0   # rz [N·m]
+      # dead_zone:
+      #   # Small thresholds for [fx, fy, fz, tx, ty, tz]
+      #   # Values below these are treated as zero.
+      #   - 0.0   # x [N]
+      #   - 0.0   # y [N]
+      #   - 0.0   # z [N]
+      #   - 0.0   # rx [N·m]
+      #   - 0.0   # ry [N·m]
+      #   - 0.0   # rz [N·m]
     
     control:
       frame:
         id: panda_hand  # Admittance calcs (displacement etc) are done in this frame. Usually the tool or end-effector
-        external: false # control frame exists within URDF kinematic chain
+        # external: false # control frame exists within URDF kinematic chain
     
     fixed_world_frame:
       frame:            # Gravity points down (neg. Z) in this frame (Usually: world or base_link)
         id: panda_link0
-        external: false # control frame exists within URDF kinematic chain
+        # external: false # control frame exists within URDF kinematic chain
     
     gravity_compensation:
       frame:
