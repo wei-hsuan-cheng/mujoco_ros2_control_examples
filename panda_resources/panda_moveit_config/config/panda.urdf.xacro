@@ -6,6 +6,15 @@
     <!-- Import panda urdf file -->
     <xacro:include filename="$(find moveit_resources_panda_description)/urdf/panda.urdf" />
 
+    <!-- Define an explicit FT frame attached to panda_hand. -->
+    <link name="sensor_fts"/>
+    <joint name="sensor_fts_joint" type="fixed">
+        <parent link="panda_hand"/>
+        <!-- Co-located with panda_hand; tweak xyz/rpy if you want an offset. -->
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <child link="sensor_fts"/>
+    </joint>
+
     <!-- Import panda ros2_control description -->
     <xacro:include filename="panda.ros2_control.xacro" />
     <xacro:include filename="panda_hand.ros2_control.xacro" />

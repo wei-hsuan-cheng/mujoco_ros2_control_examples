@@ -85,70 +85,83 @@ admittance_controller:
       - panda_joint5
       - panda_joint6
       - panda_joint7
+    
     command_interfaces:
       - position
+    
     state_interfaces:
       - position
       - velocity
+    
     chainable_command_interfaces:
       - position
       - velocity
+    
     kinematics:
       plugin_name: kinematics_interface_kdl/KinematicsInterfaceKDL
       plugin_package: kinematics_interface
       base: panda_link0  # Assumed to be stationary
-      tip: panda_hand  # The end effector frame
+      tip: sensor_fts  # Use the FT frame as kinematic tip
       alpha: 0.05
+    
     ft_sensor:
       name: sensor_fts
       frame:
-        id: panda_link7  # Wrench measurements are in this frame
+        id: sensor_fts  # Wrench measurements are in this frame
       filter_coefficient: 0.1
+    
     control:
       frame:
-        id: panda_link7  # Admittance calcs (displacement etc) are done in this frame. Usually the tool or end-effector
+        id: panda_hand  # Admittance calcs (displacement etc) are done in this frame. Usually the tool or end-effector
+    
     fixed_world_frame:
       frame:            # Gravity points down (neg. Z) in this frame (Usually: world or base_link)
         id: panda_link0
+    
     gravity_compensation:
       frame:
-        id: panda_link7
+        id: panda_hand
       CoG:  # specifies the center of gravity of the end effector
         pos:
-          - 0.0  # x
+          - -0.0096  # x
           - 0.0  # y
-          - 0.0  # z
-        force: 15.  # mass * 9.81
+          - 0.0311  # z
+        force: 7.456  # 0.76 * 9.8065
+    
     admittance:
-      selected_axes:
+      selected_axes: # true/false: enable/disable admittance on specific axes
         - false  # x
         - false  # y
         - false  # z
         - false  # rx
         - false  # ry
         - false  # rz
+    
       # Having ".0" at the end is MUST, otherwise there is a loading error
       # F = M*a + D*v + S*(x - x_d)
       mass:
-        - 8.0  # x
-        - 8.0  # y
-        - 8.0  # z
-        - 8.0  # rx
-        - 8.0  # ry
-        - 8.0  # rz
-      damping_ratio:  # damping can be used instead: zeta = D / (2 * sqrt( M * S ))
-        - 30.  # x
-        - 30.  # y
-        - 30.  # z
-        - 30.  # rx
-        - 30.  # ry
-        - 30.  # rz
+        - 20.0  # x
+        - 20.0  # y
+        - 20.0  # z
+        - 1.2  # rx
+        - 1.2  # ry
+        - 1.2  # rz
+    
+      damping_ratio: # damping can be used instead: zeta = D / (2 * sqrt( M * S ))
+        - 2.5 # x
+        - 2.5 # y
+        - 2.5 # z
+        - 2.5 # rx
+        - 4.5 # ry
+        - 2.5 # rz
+
       stiffness:
-        - 60.  # x
-        - 60.  # y
-        - 60.  # z
-        - 60.  # rx
-        - 60.  # ry
-        - 60.  # rz
+        - 500.0
+        - 500.0
+        - 500.0
+        - 10.0
+        - 20.0
+        - 10.0
+
     # general settings
     enable_parameter_update_without_reactivation: true

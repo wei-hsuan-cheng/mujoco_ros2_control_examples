@@ -42,7 +42,7 @@ def generate_launch_description():
     rviz_config_file = os.path.join(
         get_package_share_directory("interactive_marker"),
         "config",
-        "interactive_marker.rviz",
+        "open_door.rviz",
     )
 
     rviz_node = Node(
