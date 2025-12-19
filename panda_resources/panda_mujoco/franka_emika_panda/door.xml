@@ -9,16 +9,16 @@
         <!-- door_latch_offset: z=0.0 [m] -->
         <!-- door_latch_radius: 0.01 [m] -->
 
-        <body name="frame" pos="0.6 0.3 0.5" quat="0.7071068 0 0 -0.7071068" user="1001 0 2002 -0.4 -0.1 0.252 0 0.3 0.5">
+        <body name="door_frame" pos="0.6 0.1 0.5" quat="0.7071068 0 0 -0.7071068" user="1001 0 2002 -0.4 -0.1 0.252 0 0.3 0.5">
             <inertial pos="0.3 0 0" quat="0.5 0.5 0.5 0.5" mass="7.85398" diaginertia="0.923301 0.764585 0.168533" />
             
             <!-- Two vertical posts resting on ground -->
             <!-- Left post (shifted half_door_thickness) -->
-            <!-- <geom type="box" pos="-0.02 0 0" size="0.02 0.02 0.5" rgba="0.3 0.3 0.3 1"/> -->
+            <geom type="box" pos="-0.04 0 0" size="0.02 0.02 0.5" rgba="0.3 0.3 0.3 1"/>
             <!-- Right post (shifted door_width + half_door_thickness) -->
-            <!-- <geom type="box" pos="0.62 0 0" size="0.02 0.02 0.5" rgba="0.3 0.3 0.3 1"/> -->
+            <geom type="box" pos="0.64 0 0" size="0.02 0.02 0.5" rgba="0.3 0.3 0.3 1"/>
             <!-- Upper horizontal beam -->
-            <!-- <geom type="box" pos="0.3 0 0.52" size="0.34 0.02 0.02" rgba="0.3 0.3 0.3 1"/> -->
+            <geom type="box" pos="0.3 0 0.52" size="0.36 0.02 0.02" rgba="0.3 0.3 0.3 1"/>
             <!-- <site name="S_handle_target" pos="0.75 -0.5 -.18" size="0.02" group='3'/> -->
             
             <!-- Door panel -->
@@ -37,10 +37,12 @@
                 <geom type="box" size="0.3 0.02 0.495" friction="0.5 0.1 0.001" />
                 
                 <!-- Door hinge joint  -->
-                <!-- Located at the side of the door panel; add moderate damping / friction, no spring. -->
+                <!-- Located at the side of the door panel; add stronger damping / friction, no spring. -->
                 <joint name="door_hinge" pos="0.3 0 0" axis="0 0 1"
-                       damping="0.2"
-                       frictionloss="0.05" />
+                       damping="0.8"
+                       frictionloss="0.15"
+                       stiffness="2.0"
+                       springref="0.0" />
                 
                 <!-- Door latch  -->
                 <!-- Shifted from center: half_door_width - 2 * door_thickness -->
@@ -48,7 +50,13 @@
                     <inertial pos="-0.027762 0.0238544 0" quat="0.365653 0.605347 -0.36522 0.605365" mass="0.353743" diaginertia="0.0483771 0.0410001 0.0211013" />
                     
                     <!-- Door latch joint -->
-                    <joint name="door_latch" pos="0 0 0" axis="0 1 0" range="0 1.8" frictionloss="0.0" />
+                    <!-- Add a small torsion spring so the latch prefers the closed position (0 rad). -->
+                    <joint name="door_latch" pos="0 0 0" axis="0 1 0"
+                           range="0 1.8"
+                           damping="0.05"
+                           frictionloss="0.02"
+                           stiffness="2.0"
+                           springref="0.0" />
                     
                     <!-- Door latch shapes -->
                     <geom type="cylinder" size="0.01 0.075" quat="0.7071068 0.7071068 0 0" rgba="0 0 0 1" />

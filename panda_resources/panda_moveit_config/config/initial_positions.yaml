@@ -11,13 +11,24 @@ initial_positions:
 
   # Door / interaction configuration captured from RViz.
   # Values are in [rad].
-  panda_joint1: 2.68931704435023
-  panda_joint2: 0.4463939822720132
-  panda_joint3: -2.437870680585766
-  panda_joint4: -2.285065405228468
-  panda_joint5: -2.559255256304304
-  panda_joint6: 2.7941012307463087
-  panda_joint7: -1.1096874104563552
+
+  # panda_joint1: 2.68931704435023
+  # panda_joint2: 0.4463939822720132
+  # panda_joint3: -2.437870680585766
+  # panda_joint4: -2.285065405228468
+  # panda_joint5: -2.559255256304304
+  # panda_joint6: 2.7941012307463087
+  # panda_joint7: -1.1096874104563552
+
+  panda_joint1: 2.0052578278043227
+  panda_joint2: 1.4243635503447138
+  panda_joint3: -2.096324258905388
+  panda_joint4: -2.6947039766654144
+  panda_joint5: 2.455697167510495
+  panda_joint6: 2.3883917546712716
+  panda_joint7: 0.8859856875819961
+  
+
 
   # Gripper opening
   panda_finger_joint1: 0.034562291936996004
