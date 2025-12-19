@@ -20,6 +20,7 @@
             </hardware>
             <joint name="panda_joint1">
                 <xacro:if value="${ros2_control_hardware_type == 'mujoco'}">
+                  <!-- PID: 3000, 1, 100 -->
                   <param name="position_kp">3000</param>
                   <param name="position_ki">1</param>
                   <param name="position_kd">100</param>
