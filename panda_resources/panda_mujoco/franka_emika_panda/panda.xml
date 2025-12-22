@@ -195,6 +195,7 @@
                   <geom mesh="link6_15" material="black" class="visual"/>
                   <geom mesh="link6_16" material="white" class="visual"/>
                   <geom mesh="link6_c" class="collision"/>
+                  
                   <body name="link7" pos="0.088 0 0" quat="1 1 0 0">
                     <inertial mass="7.35522e-01" pos="1.0517e-2 -4.252e-3 6.1597e-2"
                       fullinertia="1.2516e-2 1.0027e-2 4.815e-3 -4.28e-4 -1.196e-3 -7.41e-4"/>
@@ -208,7 +209,7 @@
                     <geom mesh="link7_6" material="black" class="visual"/>
                     <geom mesh="link7_7" material="white" class="visual"/>
                     <geom mesh="link7_c" class="collision"/>
-                    <site name="sensor_fts_site" pos="0 0 0"/>
+                    
                     <body name="hand" pos="0 0 0.107" quat="0.9238795 0 0 -0.3826834">
                       <inertial mass="0.73" pos="-0.01 0 0.03" diaginertia="0.001 0.0025 0.0017"/>
                       <geom mesh="hand_0" material="off_white" class="visual"/>
@@ -217,6 +218,9 @@
                       <geom mesh="hand_3" material="white" class="visual"/>
                       <geom mesh="hand_4" material="off_white" class="visual"/>
                       <geom mesh="hand_c" class="collision"/>
+
+                      <site name="sensor_fts_site" pos="0 0 0"/>
+                      
                       <body name="left_finger" pos="0 0 0.0584">
                         <inertial mass="0.015" pos="0 0 0" diaginertia="2.375e-6 2.375e-6 7.5e-7"/>
                         <joint name="panda_finger_joint1" class="finger"/>

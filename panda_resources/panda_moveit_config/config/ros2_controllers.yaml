@@ -121,7 +121,7 @@ admittance_controller:
     
     control:
       frame:
-        id: panda_hand  # Admittance calcs (displacement etc) are done in this frame. Usually the tool or end-effector
+        id: sensor_fts  # Admittance calcs (displacement etc) are done in this frame. Usually the tool or end-effector
         external: false # control frame exists within URDF kinematic chain
     
     fixed_world_frame:
@@ -131,7 +131,7 @@ admittance_controller:
     
     gravity_compensation:
       frame:
-        id: panda_hand
+        id: sensor_fts
       CoG:  # specifies the center of gravity of the end effector
         pos:
           - -0.0096  # x
@@ -141,9 +141,9 @@ admittance_controller:
     
     admittance:
       selected_axes: # true/false: enable/disable admittance on specific axes
-        - false  # x
-        - false  # y
-        - false  # z
+        - true  # x
+        - true  # y
+        - true  # z
         - true  # rx
         - true  # ry
         - true  # rz
