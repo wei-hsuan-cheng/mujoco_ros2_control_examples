@@ -35,7 +35,9 @@ def generate_launch_description():
         package="moveit_ros_move_group",
         executable="move_group",
         output="screen",
-        parameters=[moveit_config.to_dict(), {"use_sim_time": True}]
+        parameters=[
+            moveit_config.to_dict(), {"use_sim_time": True},
+            ]
     )
 
     # RViz
@@ -131,10 +133,22 @@ def generate_launch_description():
         arguments=["panda_hand_controller", "-c", "/controller_manager"],
     )
     
+    servo_controller_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["servo_controller", "-c", "/controller_manager"],
+    )
+    
     ft_sensor_broadcaster_spawner = Node(
         package="controller_manager",
         executable="spawner",
         arguments=["force_torque_broadcaster", "-c", "/controller_manager"],
+    )
+    
+    robot_state_broadcaster_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["robot_state_broadcaster", "-c", "/controller_manager"],
     )
     
     admittance_controller_spawner = Node(
@@ -147,27 +161,42 @@ def generate_launch_description():
         [
             DeclareLaunchArgument(
                 "task",
-                default_value="push_load",
-                description="Task name (e.g. 'peg_in_hole' or 'push_load')",
+                default_value="open_door",
+                description="Task name (e.g. 'open_door', 'peg_in_hole', or 'push_load')",
             ),
+            
             RegisterEventHandler(
                 event_handler=OnProcessStart(
                     target_action=node_mujoco_ros2_control,
-                    on_start=[joint_state_broadcaster_spawner],
+                    on_start=[
+                        joint_state_broadcaster_spawner,
+                        # robot_state_broadcaster_spawner,
+                        ],
                 )
             ),
+            
             RegisterEventHandler(
                 event_handler=OnProcessExit(
                     target_action=joint_state_broadcaster_spawner,
-                    on_exit=[admittance_controller_spawner, panda_hand_controller_spawner, ft_sensor_broadcaster_spawner],
+                    # target_action=robot_state_broadcaster_spawner,
+                    on_exit=[
+                        admittance_controller_spawner, 
+                        panda_hand_controller_spawner, 
+                        ft_sensor_broadcaster_spawner,
+                        ],
                 )
             ),
+            
             RegisterEventHandler(
                 event_handler=OnProcessExit(
                     target_action=admittance_controller_spawner,
-                    on_exit=[panda_arm_controller_spawner],
+                    on_exit=[
+                        panda_arm_controller_spawner,
+                        # servo_controller_spawner,
+                             ],
                 )
             ),
+            
             rviz_node,
             world2robot_tf_node,
             robot_state_publisher,
