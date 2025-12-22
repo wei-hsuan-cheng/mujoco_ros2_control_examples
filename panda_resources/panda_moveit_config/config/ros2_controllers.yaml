@@ -79,11 +79,11 @@ panda_hand_controller:
 robot_state_broadcaster:
   ros__parameters:
     chain_names:
-      - sensor_fts
+      - panda_arm
     chains:
       tool_tip:
         root: panda_link0
-        tip: sensor_fts
+        tip: panda_link8
 
 servo_controller:
   ros__parameters:
@@ -132,7 +132,7 @@ servo_controller:
     is_primary_planning_scene_monitor: false
 
     ## MoveIt properties
-    move_group_name:  sensor_fts  # Often 'manipulator' or 'arm'
+    move_group_name:  panda_arm  # (see srdf.xacro file) often 'manipulator' or 'arm'
     planning_frame: panda_link0  # The MoveIt planning frame. Often 'base_link' or 'world'
 
     ## Stopping behaviour
