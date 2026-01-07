@@ -42,13 +42,20 @@ panda_arm_controller:
       - panda_joint6
       - panda_joint7
     command_joints:
-      - admittance_controller/panda_joint1
-      - admittance_controller/panda_joint2
-      - admittance_controller/panda_joint3
-      - admittance_controller/panda_joint4
-      - admittance_controller/panda_joint5
-      - admittance_controller/panda_joint6
-      - admittance_controller/panda_joint7
+      # - admittance_controller/panda_joint1
+      # - admittance_controller/panda_joint2
+      # - admittance_controller/panda_joint3
+      # - admittance_controller/panda_joint4
+      # - admittance_controller/panda_joint5
+      # - admittance_controller/panda_joint6
+      # - admittance_controller/panda_joint7
+      - panda_joint1
+      - panda_joint2
+      - panda_joint3
+      - panda_joint4
+      - panda_joint5
+      - panda_joint6
+      - panda_joint7
     constraints:
       panda_joint1:
         goal: 0.03
