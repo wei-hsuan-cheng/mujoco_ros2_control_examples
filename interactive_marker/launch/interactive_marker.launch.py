@@ -145,12 +145,6 @@ def generate_launch_description():
         arguments=["force_torque_broadcaster", "-c", "/controller_manager"],
     )
     
-    robot_state_broadcaster_spawner = Node(
-        package="controller_manager",
-        executable="spawner",
-        arguments=["robot_state_broadcaster", "-c", "/controller_manager"],
-    )
-    
     admittance_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
@@ -169,16 +163,14 @@ def generate_launch_description():
                 event_handler=OnProcessStart(
                     target_action=node_mujoco_ros2_control,
                     on_start=[
-                        # joint_state_broadcaster_spawner,
-                        robot_state_broadcaster_spawner,
+                        joint_state_broadcaster_spawner,
                         ],
                 )
             ),
             
             RegisterEventHandler(
                 event_handler=OnProcessExit(
-                    # target_action=joint_state_broadcaster_spawner,
-                    target_action=robot_state_broadcaster_spawner,
+                    target_action=joint_state_broadcaster_spawner,
                     on_exit=[
                         admittance_controller_spawner, 
                         panda_hand_controller_spawner, 
