@@ -9,7 +9,12 @@ Before clone the repo, please make sure you have [`mujoco_ros2_control`](https:/
 cd ~/ros2_ws/src
 git clone https://github.com/wei-hsuan-cheng/mujoco_ros2_control_examples.git -b humble
 cd ~/ros2_ws
-colcon build --symlink-install && . install/setup.bash
+colcon build --symlink-install --packages-select \
+    interactive_marker \
+    moveit_resources_panda_description \
+    moveit_resources_panda_moveit_config \
+    panda_mujoco peg_in_hole \
+    && . install/setup.bash
 ```
 
 ### Running demos (collision/contact physical interactions invovled)
